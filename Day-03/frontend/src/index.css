@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: system-ui, 'Helvetica Neue', sans-serif;
+    background-color: rgba(0, 0, 0, 0.805);
+}
+
+.notes {
+  display: flex;
+  align-items: center;
+  padding-top: 3rem;
+  gap: 20px;
+}
+
+.note {
+  background-color: gray;
+  padding: 1rem;
+  border-radius: 0.7rem;
+  max-width: 20rem;
+  color: white;
+}
