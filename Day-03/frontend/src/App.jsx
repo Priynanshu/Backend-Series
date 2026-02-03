@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const App = () => {
@@ -21,21 +21,74 @@ const App = () => {
       description: " test description 4",
     }
   ])
+  const [editDesc, setEditDesc] = useState({});
 
-  axios.get("http://localhost:3000/notes")
-  .then((res)=> {
-   setNotes(res.data.notes)
-  })
+  function fetchNotes() {
+    axios.get("http://localhost:3000/notes")
+      .then((res) => {
+        setNotes(res.data.notes);
+      })
+  }
+
+  useEffect(() => {
+    fetchNotes()
+  }, [])
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const { title, description } = e.target.elements;
+
+    axios.post("http://localhost:3000/notes", {
+      title: title.value,
+      description: description.value
+    })
+      .then((res) => {
+        fetchNotes()
+      })
+  }
+
+  function handleDelete(id) {
+    axios.delete(`http://localhost:3000/notes/` + id)
+      .then((res) => {
+        fetchNotes()
+      })
+  }
+
+  function handleUpdate(id) {
+  const input = document.getElementById(`desc-${id}`);
+  const updatedDescription = input.value;
+
+  axios.patch(`http://localhost:3000/notes/${id}`, {
+    description: updatedDescription,
+  }).then(() => {
+    fetchNotes();
+  });
+}
+
 
   return (
-    <div className='notes'>
-      {notes.map(note=> {
-        return <div className="note">
-        <h1>{note.title}</h1>
-        <p>{note.description}</p>
+    <>
+      <form onSubmit={handleSubmit} className="note-create-form">
+        <input type="text" name="title" placeholder='enter title' />
+        <input type="text" name="description" placeholder='enter description' />
+        <button className='submit-btn'>submit</button>
+      </form>
+      <div className='notes'>
+        {notes.map((note, idx) => {
+          return <div key={idx} className="note">
+            <h1>{note.title}</h1>
+            <p>{note.description}</p>
+            <input
+              type="text"
+              defaultValue={note.description}
+              id={`desc-${note._id}`}
+            />
+            <button onClick={() => handleDelete(note._id)}>Delete</button>
+            <button onClick={() => handleUpdate(note._id)}>Update</button>
+          </div>
+        })}
       </div>
-      })}
-    </div>
+    </>
   )
 }
 
