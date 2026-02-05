@@ -21,7 +21,6 @@ const App = () => {
       description: " test description 4",
     }
   ])
-  const [editDesc, setEditDesc] = useState({});
 
   function fetchNotes() {
     axios.get("http://localhost:3000/notes")
