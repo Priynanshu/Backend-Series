@@ -36,4 +36,34 @@ authRouter.post('/register', async (req, res)=> {
     console.log(token);
 })
 
+authRouter.post('/login', async (req, res)=> {
+    const {email, password} = req.body;
+    const user = await UserModal.findOne({email});
+
+    if(!user) {
+        return res.status(404).json({message: 'User not found with this email'});
+    }
+
+    const isPasswordMatch = user.password === password;
+
+    if(!isPasswordMatch) {
+        return res.status(400).json({message: 'Invalid password'});
+    }
+
+    const token = jwt.sign(
+        {
+            id: user._id,
+        },
+        process.env.JWT_SECRET
+    )
+
+    res.cookie('jwt_token', token)
+
+    res.status(200).json({
+        message: 'User logged in successfully',
+        user,
+        token
+    })
+})
+
 module.exports = authRouter;
