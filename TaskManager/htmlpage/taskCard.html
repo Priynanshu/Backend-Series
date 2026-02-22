@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster - Task Card Components</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0b111b;
+            --card-bg: #111b2d;
+            --border: #1f2937;
+            --text-muted: #9ca3af;
+            --blue: #3b82f6;
+            --orange: #f97316;
+            --red: #ef4444;
+            --green: #10b981;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-dark); color: white; font-family: 'Inter', sans-serif; padding: 40px; }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* Header Section */
+        .page-header { margin-bottom: 40px; }
+        .page-header h1 { font-size: 2rem; margin-bottom: 10px; }
+        .page-header p { color: var(--text-muted); max-width: 600px; line-height: 1.6; }
+
+        /* Grid Layout for Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .variant-tag {
+            float: right;
+            background: #1e293b;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: var(--blue);
+            text-transform: uppercase;
+        }
+
+        .section-title { font-size: 1.1rem; margin-bottom: 15px; display: block; }
+
+        /* Task Card Base */
+        .task-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .card-header { display: flex; gap: 15px; margin-bottom: 20px; }
+        .thumb { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; background: #1f2937; display: flex; align-items: center; justify-content: center; }
+        
+        .card-info { flex: 1; }
+        .card-info h3 { font-size: 1rem; margin-bottom: 4px; }
+        .card-info p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+        .card-meta { display: flex; gap: 12px; margin-top: 12px; }
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; gap: 5px; }
+        
+        /* Variants */
+        .badge.medium { background: rgba(249, 115, 22, 0.15); color: var(--orange); }
+        .badge.high { background: rgba(59, 130, 246, 0.15); color: var(--blue); }
+        .badge.low { background: rgba(16, 185, 129, 0.15); color: var(--green); }
+        .date { font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+        .due-urgent { color: var(--red); }
+
+        /* Card Footer Actions */
+        .card-footer {
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-toggle { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--text-muted); }
+        .switch { width: 34px; height: 18px; background: #374151; border-radius: 20px; position: relative; cursor: pointer; }
+        .switch::after { content: ''; width: 14px; height: 14px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; }
+        .active-switch { background: var(--blue); }
+        .active-switch::after { left: 18px; }
+
+        .actions { display: flex; gap: 12px; color: var(--text-muted); cursor: pointer; }
+
+        /* Completed State */
+        .completed-card { opacity: 0.6; }
+        .completed-card h3 { text-decoration: line-through; }
+
+        /* Minimal Layout */
+        .minimal { padding: 15px; border-left: 4px solid #4b5563; }
+        .tag-small { font-size: 0.7rem; background: #1e293b; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; display: inline-block; }
+
+        /* Properties Table */
+        .properties-section { margin-top: 80px; }
+        .properties-section h2 { margin-bottom: 25px; }
+        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 8px; overflow: hidden; }
+        th, td { text-align: left; padding: 16px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+        th { color: var(--text-muted); font-weight: 500; text-transform: uppercase; font-size: 0.75rem; }
+        .val-high { color: var(--blue); }
+        .val-med { color: var(--orange); }
+        .val-low { color: var(--green); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Task Card Components</h1>
+        <p>A detailed breakdown of task card states, variations, and interactive elements used throughout the project management dashboard.</p>
+    </div>
+
+    <div class="card-grid">
+        <div>
+            <span class="section-title">Standard Task <span class="variant-tag">Variant A</span></span>
+            <div class="task-card">
+                <div class="card-header">
+                    <img src="https://via.placeholder.com/48" class="thumb" alt="task thumb">
+                    <div class="card-info">
+                        <h3>Q3 Marketing Report</h3>
+                        <p>Draft the initial quarterly report including metrics from all social...</p>
+                        <div class="card-meta">
+                            <span class="badge medium">Medium</span>
+                            <span class="date"><i class="far fa-calendar"></i> Oct 24</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="status-toggle">
+                        <div class="switch"></div> Pending
+                    </div>
+                    <div class="actions">
+                        <i class="fas fa-pencil-alt"></i>
+                        <i class="far fa-trash-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <span class="section-title">Urgent Task <span class="variant-tag">Variant B</span></span>
+            <div class="task-card" style="border-left: 3px solid var(--blue);">
+                <div class="card-header">
+                    <div class="thumb"><i class="fas fa-bug" style="color: var(--blue);"></i></div>
+                    <div class="card-info">
+                        <h3>Fix Login Authentication...</h3>
+                        <p>Users reporting 500 error on 2FA step. Critical for upcoming...</p>
+                        <div class="card-meta">
+                            <span class="badge high">High Priority</span>
+                            <span class="date due-urgent"><i class="fas fa-exclamation-triangle"></i> Due Tomorrow</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="status-toggle">
+                        <div class="switch"></div> In Progress
+                    </div>
+                    <div class="actions">
+                        <i class="fas fa-pencil-alt"></i>
+                        <i class="far fa-trash-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <span class="section-title">Completed Task <span class="variant-tag">Variant C</span></span>
+            <div class="task-card completed-card">
+                <div class="card-header">
+                    <div class="thumb" style="position:relative;">
+                        <img src="https://via.placeholder.com/48" alt="task thumb" style="border-radius:8px;">
+                        <i class="fas fa-check-circle" style="position:absolute; bottom:-5px; right:-5px; color:var(--green); background:var(--card-bg); border-radius:50%;"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Update Team Bios</h3>
+                        <p>Refresh the "About Us" page with new headshots from last week.</p>
+                        <div class="card-meta">
+                            <span class="badge low">Low Priority</span>
+                            <span class="date"><i class="fas fa-check"></i> Done Oct 20</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="status-toggle">
+                        <div class="switch active-switch"></div> Completed
+                    </div>
+                    <div class="actions">
+                        <i class="fas fa-pencil-alt"></i>
+                        <i class="far fa-trash-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="max-width: 350px;">
+        <span class="section-title">Minimal Layout <span class="variant-tag">Variant D</span></span>
+        <div class="task-card minimal">
+            <span class="tag-small">Unsorted</span>
+            <div class="card-info">
+                <h3>Client Feedback Review</h3>
+                <p>Process the notes from the Friday sync call.</p>
+                <div class="date" style="margin-top:10px;"><i class="far fa-clock"></i> No Due Date</div>
+            </div>
+            <div class="card-footer">
+                <div class="status-toggle">
+                    <div class="switch"></div>
+                </div>
+                <div class="actions">
+                    <i class="fas fa-pencil-alt"></i>
+                    <i class="far fa-trash-alt"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="properties-section">
+        <h2>Component Properties</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Values</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Priority</strong></td>
+                    <td><span class="val-high">High</span>, <span class="val-med">Medium</span>, <span class="val-low">Low</span></td>
+                    <td>Determines the badge color and border accents.</td>
+                </tr>
+                <tr>
+                    <td><strong>Status</strong></td>
+                    <td>Pending, Completed</td>
+                    <td>Toggles card opacity and strikethrough styling on title.</td>
+                </tr>
+                <tr>
+                    <td><strong>Thumbnail</strong></td>
+                    <td>Image, Icon, None</td>
+                    <td>Optional slot. If no image is provided, layout shifts left.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

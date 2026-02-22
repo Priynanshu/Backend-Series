@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #0b0f17;
+            --card-bg: #111827;
+            --border-color: #1f2937;
+            --input-focus: #3b82f6;
+            --text-gray: #9ca3af;
+            --blue-primary: #1d4ed8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at bottom right, rgba(29, 78, 216, 0.15), transparent 40%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        /* Login Card Container */
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+            height: 87vh;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .brand-icon {
+            background: #1e3a8a;
+            color: #60a5fa;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            color: #d1d5db;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .input-wrapper .toggle-password {
+            left: auto;
+            right: 12px;
+            cursor: pointer;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Remember & Forgot */
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-gray);
+        }
+
+        .forgot-link {
+            color: var(--input-focus);
+            text-decoration: none;
+        }
+
+        /* Buttons */
+        .sign-in-btn {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 24px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            margin-bottom: 24px;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .divider:not(:empty)::before { margin-right: 12px; }
+        .divider:not(:empty)::after { margin-left: 12px; }
+
+        /* Social Buttons */
+        .social-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .social-btn {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .social-btn:hover {
+            background: #374151;
+        }
+
+        .signup-text {
+            margin-top: 32px;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .signup-text a {
+            color: var(--input-focus);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 24px;
+                border: none;
+                background: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="brand">
+            <div class="brand-icon"><i class="fas fa-check-circle"></i></div>
+            <span class="brand-name">TaskFlow</span>
+        </div>
+
+        <h2>Welcome back</h2>
+        <p class="subtitle">Please enter your details to sign in.</p>
+
+        <form>
+            <div class="form-group">
+                <label>Email address</label>
+                <div class="input-wrapper">
+                    <i class="far fa-envelope"></i>
+                    <input type="email" placeholder="name@company.com">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="••••••••">
+                    <i class="far fa-eye toggle-password"></i>
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="remember" style="width: 14px; padding: 0;">
+                    <label for="remember" style="margin: 0;">Remember me</label>
+                </div>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="sign-in-btn">Sign in</button>
+        </form>
+
+        <div class="divider">Or continue with</div>
+
+        <div class="social-group">
+            <button class="social-btn">
+                <img src="https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png" width="18" alt="Google">
+                Google
+            </button>
+            <button class="social-btn">
+                <i class="fab fa-github"></i>
+                GitHub
+            </button>
+        </div>
+
+        <p class="signup-text">
+            Don't have an account? <a href="#">Sign up for free</a>
+        </p>
+    </div>
+
+</body>
+</html>

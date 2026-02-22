@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster - Edit Task</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #030712; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+
+        .modal {
+            background-color: #111827;
+            width: 100%;
+            max-width: 800px; /* Wider for 2-column layout */
+            border-radius: 12px;
+            border: 1px solid #1f2937;
+            color: white;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Header */
+        .modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #1f2937;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-title { display: flex; align-items: center; gap: 12px; }
+        .header-title i { background: #1e3a8a; color: #3b82f6; padding: 8px; border-radius: 6px; }
+        .header-title h2 { font-size: 1rem; }
+        .header-title p { font-size: 0.75rem; color: #9ca3af; }
+
+        /* Main Body Layout */
+        .modal-body { display: flex; gap: 0; }
+        .left-col { flex: 2; padding: 24px; border-right: 1px solid #1f2937; }
+        .right-col { flex: 1; padding: 24px; background: #111827; }
+
+        label { display: block; font-size: 0.75rem; color: #9ca3af; margin-bottom: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        input, textarea, select {
+            width: 100%; background: #0f172a; border: 1px solid #1f2937; border-radius: 6px;
+            padding: 10px; color: white; font-size: 0.9rem; outline: none; margin-bottom: 20px;
+        }
+
+        /* Subtasks Section */
+        .subtasks-header { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 10px; }
+        .subtask-item {
+            background: #0f172a; border: 1px solid #1f2937; padding: 10px; border-radius: 6px;
+            display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.85rem;
+        }
+        .subtask-item input[type="checkbox"] { width: auto; margin: 0; cursor: pointer; }
+        .btn-add-sub { color: #3b82f6; background: none; border: none; font-size: 0.8rem; cursor: pointer; padding: 0; }
+
+        /* Right Column Specifics */
+        .tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; }
+        .tag { background: rgba(168, 85, 247, 0.2); color: #a855f7; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; display: flex; align-items: center; gap: 5px; }
+        .tag.blue { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+
+        .attachment-btn {
+            border: 1px dashed #374151; width: 100%; padding: 15px; border-radius: 8px;
+            text-align: center; color: #9ca3af; font-size: 0.8rem; cursor: pointer;
+        }
+
+        /* Footer */
+        .modal-footer {
+            padding: 16px 24px; border-top: 1px solid #1f2937;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .btn-delete { color: #ef4444; background: none; border: none; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; }
+        .footer-right { display: flex; gap: 12px; }
+        .btn { padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; border: none; }
+        .btn-cancel { background: transparent; color: white; }
+        .btn-save { background: #2563eb; color: white; display: flex; align-items: center; gap: 8px; }
+    </style>
+</head>
+<body>
+
+<div class="modal">
+    <div class="modal-header">
+        <div class="header-title">
+            <i class="fas fa-edit"></i>
+            <div>
+                <h2>Edit Task</h2>
+                <p>Update task details and settings</p>
+            </div>
+        </div>
+        <i class="fas fa-times" style="cursor:pointer; color:#9ca3af;"></i>
+    </div>
+
+    <div class="modal-body">
+        <div class="left-col">
+            <label>Task Title</label>
+            <input type="text" value="Q3 Marketing Report">
+
+            <label>Description</label>
+            <textarea style="height: 120px;">Draft the initial outline for the Q3 report including social media metrics and paid ad ROI. Need to gather data from the analytics dashboard first.</textarea>
+
+            <div class="subtasks-header">
+                <span>Subtasks</span>
+                <span style="color: #9ca3af;">2 of 3 completed</span>
+            </div>
+            <div class="subtask-item">
+                <input type="checkbox" checked> <span>Collect social media metrics</span>
+            </div>
+            <div class="subtask-item">
+                <input type="checkbox" checked> <span>Export Google Ads data</span>
+            </div>
+            <div class="subtask-item">
+                <input type="checkbox"> <span>Draft executive summary</span>
+            </div>
+            <button class="btn-add-sub"><i class="fas fa-plus"></i> Add subtask</button>
+        </div>
+
+        <div class="right-col">
+            <label>Status</label>
+            <select>
+                <option selected>In Progress</option>
+                <option>Done</option>
+                <option>Pending</option>
+            </select>
+
+            <label>Priority</label>
+            <select>
+                <option>Low</option>
+                <option>Medium</option>
+                <option selected>High Priority</option>
+            </select>
+
+            <label>Due Date</label>
+            <input type="text" value="Oct 24, 2023">
+
+            <label>Assignees</label>
+            <div style="display: flex; gap: 5px; margin-bottom: 20px;">
+                <div style="width:24px; height:24px; border-radius:50%; background:#4b5563;"></div>
+                <div style="width:24px; height:24px; border-radius:50%; background:#6b7280;"></div>
+                <div style="width:24px; height:24px; border-radius:50%; border:1px dashed #4b5563; display:flex; align-items:center; justify-content:center; font-size:10px;">+</div>
+            </div>
+
+            <label>Tags</label>
+            <div class="tag-container">
+                <span class="tag">Marketing <i class="fas fa-times"></i></span>
+                <span class="tag blue">Q3 <i class="fas fa-times"></i></span>
+                <button class="btn-add-sub" style="font-size: 0.7rem;">+ Add Tag</button>
+            </div>
+
+            <div class="attachment-btn">
+                <i class="fas fa-cloud-upload-alt"></i><br>
+                <span>Add Attachment</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn-delete"><i class="far fa-trash-alt"></i> Delete Task</button>
+        <div class="footer-right">
+            <button class="btn btn-cancel">Cancel</button>
+            <button class="btn btn-save"><i class="fas fa-save"></i> Save Changes</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
