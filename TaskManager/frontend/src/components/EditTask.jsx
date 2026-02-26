@@ -49,16 +49,6 @@ const EditTask = () => {
   }, [task, id]);
 
   // ----------------------------
-  // Handle Input Change
-  // ----------------------------
-  const handleChange = (e) => {
-    setEditData({
-      ...editData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // ----------------------------
   // Handle Image Change
   // ----------------------------
   const handleImageChange = (e) => {
